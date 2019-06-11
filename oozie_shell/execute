@@ -1,0 +1,14 @@
+hdfs dfs -put /home/annapurnachinta/oozie_demo/shell_script_demo /user/annapurnachinta/oozie_demo/shell_demo
+
+oozie job -oozie http://nn01.itversity.com:11000/oozie -config /home/annapurnachinta/oozie_demo/shell_script_demo/job.properties -run
+
+oozie job -oozie http://nn01.itversity.com:11000/oozie -info 0000018-181020135722096-oozie-oozi-W
+
+
+> <command>import --connect jdbc:mysql://nn01.itversity.com/retail_db --username retail_dba --password itversity --table departments --driver com.mysql.jdbc.Driver --warehouse-dir /user/${wf:user()}oozie_sqoop_script/ -m 1</command>
+
+<command></command>
+
+
+
+B1gd@t@_l@bs  oozie

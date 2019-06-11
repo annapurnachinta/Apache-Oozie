@@ -1,0 +1,16 @@
+DBSERVER=ms.itversity.com
+DBNAME=retail_db
+DBUSER=retail_user
+DBPASSWORD=itversity
+DBTABLE=orders
+
+CMD="sqoop import  \
+--connect jdbc:mysql://${DBSERVER}/${DBNAME} \
+--username ${DBUSER} \
+--password ${DBPASSWORD} \
+--table ${DBTABLE} \
+--target-dir /user/annapurnachinta/sqoop_import_script/orders \
+--split-by order_id \
+--delete-target-dir"
+
+${CMD}
