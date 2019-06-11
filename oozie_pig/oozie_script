@@ -1,0 +1,4 @@
+orders = LOAD '$INPUT' USING PigStorage(',') AS (order_id: int, order_date: chararray, customer_id: int, order_status: chararray);
+grouped = GROUP orders BY order_status;
+ordercount = FOREACH grouped GENERATE group, COUNT_STAR(orders) AS cnt;
+STORE ordercount INTO '$OUTPUT';

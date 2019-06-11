@@ -1,0 +1,33 @@
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="pig-wf">
+    <start to="pig-action"/>
+                <action name="pig-action">
+                        <pig>
+                                <job-tracker>${resourceManager}</job-tracker>
+                                <name-node>${nameNode}</name-node>
+                                <prepare>
+                                        <delete path="${outputDir}"/>
+                                </prepare>
+                                <configuration>
+                                        <property>
+                                                <name>mapred.compress.map.output</name>
+                                                <value>true</value>
+                                        </property>
+                                        <property>
+                                                <name>oozie.action.external.stats.write</name>
+                                                <value>true</value>
+                                        </property>
+                                </configuration>
+                                <script>order_count_by_status.pig</script>
+                                <argument>-param</argument>
+                                <argument>INPUT=${inputDir}</argument>
+                                <argument>-param</argument>
+                                <argument>OUTPUT=${outputDir}/pig-output3</argument>
+                        </pig>
+                        <ok to="end"/>
+                        <error to="fail"/>
+                </action>
+        <kill name="fail">
+                <message>Map/Reduce failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+        </kill>
+    <end name="end"/>
+</workflow-app>

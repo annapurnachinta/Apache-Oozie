@@ -1,0 +1,35 @@
+#To check the status of oozie:
+oozie admin -oozie http://nn01.itversity.com:11000/oozie -status
+Oozie status should be NORMAL
+
+#To check the Oozie version:
+oozie admin -oozie http://ip-10-0-0-21:11000/oozie -version
+
+#Create a folder 
+mkdir -p oozie_demo/pig_demo
+
+#Create a pig script file in oozie_demo/pig_demo
+vi pig_script
+
+#Get nameNode from /etc/hadoop/conf/core-site.xml	#fs.defaultFS=hdfs://nn01.itversity.com:8020
+#Get jobTracker from etc/hadoop/conf/vi yarn-site.xml	#resourcemanage=rm01.itversity.com:8050
+#Create and configure job.properties
+vi job.properties
+
+#Create and configure workflow.xml file
+vi workFlow.xml 
+
+#Copy a workflow.xml, job.properties and pig script to your hdfs location: 
+hdfs dfs -put oozie_demo/pig_demo /user/username/oozie_demo/pig_demo
+
+#To run oozie workflow:
+oozie job -oozie http://nn01.itversity.com:11000/oozie -config /home/annapurnachinta/oozie_demo/pig_demo/job.properties
+
+#Check the workflow job status:
+oozie job -oozie http://nn01.itversity.com:11000/oozie -info <Enter job id>
+
+#Output in HDFS path
+hdfs dfs -ls /user/annapurnachinta/oozie/pig/orders/pig-output3
+hdfs dfs -cat /user/annapurnachinta/oozie/pig/orders/pig-output3/part*
+
+

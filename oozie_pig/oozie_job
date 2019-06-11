@@ -1,0 +1,8 @@
+nameNode = hdfs://nn01.itversity.com:8020
+resourceManager = rm01.itversity.com:8050
+user.name = annapurnachinta
+inputDir = /user/${user.name}/sqoop_import/retail_db/orders
+outputDir = /user/${user.name}/oozie/pig/orders
+oozie.use.system.libpath=true
+
+oozie.wf.application.path=${nameNode}/user/${user.name}/oozie_demo/pig_demo
