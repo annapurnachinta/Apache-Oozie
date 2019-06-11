@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS annu_retail_db_txt.test;
+CREATE EXTERNAL TABLE annu_retail_db_txt.test (a INT) STORED AS TEXTFILE LOCATION '${INPUT}';
+INSERT OVERWRITE DIRECTORY '${OUTPUT}' SELECT * FROM annu_retail_db_txt.test;

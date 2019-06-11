@@ -1,0 +1,7 @@
+nameNode = hdfs://nn01.itversity.com:8020
+jobTracker = rm01.itversity.com:8050
+queueName=default
+examplesRoot=oozie_demo/hive_demo
+oozie.use.system.libpath=true
+
+oozie.wf.application.path=${nameNode}/user/${user.name}/${examplesRoot}/
