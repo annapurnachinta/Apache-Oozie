@@ -1,0 +1,12 @@
+nameNode=hdfs://nn01.itversity.com:8020
+jobTracker=rm01.itversity.com:8050
+queueName=default
+oozie.use.system.libpath=true
+oozie.libpath=${nameNode}/user/oozie/share/lib/lib_20180803155221/sqoop/
+HOSTNAME=ms.itversity.com
+DATABASE=retail_db
+USERNAME=retail_user
+PASSWORD=itversity
+TABLENAME=departments
+
+oozie.wf.application.path=${nameNode}/user/${user.name}/oozie_demo/sqoop_demo

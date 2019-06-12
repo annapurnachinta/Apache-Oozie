@@ -1,0 +1,4 @@
+HOSTNAME=ms.itversity.com
+DATABASE=retail_db
+USERNAME=retail_user
+PASSWORD=itversity
