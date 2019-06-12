@@ -1,0 +1,54 @@
+1. First create a simple sqoop job as below:
+sqoop job --create sqoop_job_testing \
+--meta-connect jdbc:hsqldb:hsql://gw03.itversity.com:16000/sqoop \
+-- import \
+--connect "jdbc:mysql://ms.itversity.com:3306/retail_db" \
+--username retail_user \
+--password itversity \
+--table departments \
+--check-column department_id \
+--incremental append \
+--last-value 0 \
+--target-dir /user/username/output \
+-m 1
+
+2. create job.properties file
+nameNode=hdfs://nn01.itversity.com:8020
+jobTracker=rm01.itversity.com:8050
+queueName=default
+oozie.use.system.libpath=true
+oozie_sqoop.libpath=${nameNode}/user/oozie/share/lib/lib_20180803155221/sqoop
+oozie.libpath=${oozie.sqoop_libpath},${nameNode}/user/oozie/share/lib/lib_20180803155221/hive/
+
+oozie.wf.application.path=${nameNode}/user/${user.name}/oozie_demo/sqoop_job
+
+3. create workflow.xml file
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="shell-wf">
+    <start to="shell-node"/>
+    <action name="shell-node">
+        <shell xmlns="uri:oozie:shell-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <exec>run.sh</exec>
+            <env-var>HADOOP_USER_NAME=${wf:user()}</env-var>
+                <file>/user/annapurnachinta/oozie_demo/sqoop_job/run.sh#run.sh</file>
+            <capture-output/>
+        </shell>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+    <kill name="fail">
+        <message>Shell action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
+
+4. create run.sh
+sqoop job --exec sqoop_job_testing01 --meta-connect jdbc:hsqldb:hsql://gw03.itversity.com:16000/sqoop
+
