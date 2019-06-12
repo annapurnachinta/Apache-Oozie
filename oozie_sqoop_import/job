@@ -1,0 +1,6 @@
+nameNode=hdfs://nn01.itversity.com:8020
+jobTracker=rm01.itversity.com:8050
+queueName=default
+oozie.use.system.libpath=true
+oozie.libpath=${nameNode}/user/oozie/share/lib/lib_20180803155221/sqoop/
+oozie.wf.application.path=${nameNode}/user/${user.name}/oozie_demo/simple_sqoop_demo
